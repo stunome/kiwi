@@ -16,7 +16,13 @@ end
 
 post '/pages' do
 
-  filename = params['title']
+  # Empty title?
+  if params['title'].nil? || params['title'] == ''
+    return erb :form
+  end
+
+  # Sanitize filename (/, .)
+  filename = params['title'].gsub( /(\\|\/)/, '' ).gsub(/\./, '_')
 
   puts "*** Creating page #{filename}"
 
