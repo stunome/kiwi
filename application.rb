@@ -10,15 +10,18 @@ def page_path(title)
   PAGES_DIRECTORY + '/' + title
 end
 
+# --- Homepage ----------------------------------------------------------------
 get '/' do
   @pages = Dir.entries(PAGES_DIRECTORY).reject { |file| file =~ /^\./ }
   erb :homepage
 end
 
+# --- New page ----------------------------------------------------------------
 get '/new' do
   erb :form
 end
 
+# --- Create page -------------------------------------------------------------
 post '/pages' do
 
   # Empty title?
@@ -38,6 +41,7 @@ post '/pages' do
   redirect '/'
 end
 
+# --- Show page ---------------------------------------------------------------
 get "/pages/:title" do |title|
   @title = title
   @body = File.read page_path(title)
