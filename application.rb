@@ -11,7 +11,8 @@ def page_path(title)
 end
 
 get '/' do
-  "Welcome to our wiki"
+  @pages = Dir.entries(PAGES_DIRECTORY).reject { |file| file =~ /^\./ }
+  erb :homepage
 end
 
 get '/new' do
