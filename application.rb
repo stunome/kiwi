@@ -2,12 +2,17 @@ require 'rubygems'
 require 'sinatra'
 require 'fileutils'
 
+# --- Storage ----------------------------------------------------------------
 PAGES_DIRECTORY = File.expand_path('../pages', __FILE__)
-
 FileUtils.mkdir_p PAGES_DIRECTORY
 
-def page_path(title)
-  PAGES_DIRECTORY + '/' + title
+# --- Helpers ----------------------------------------------------------------
+helpers do
+
+  def page_path(title)
+    PAGES_DIRECTORY + '/' + title
+  end
+
 end
 
 # --- Homepage ----------------------------------------------------------------
