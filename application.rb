@@ -6,6 +6,10 @@ PAGES_DIRECTORY = File.expand_path('../pages', __FILE__)
 
 FileUtils.mkdir_p PAGES_DIRECTORY
 
+def page_path(title)
+  PAGES_DIRECTORY + '/' + title
+end
+
 get '/' do
   "Welcome to our wiki"
 end
@@ -26,7 +30,7 @@ post '/pages' do
 
   puts "*** Creating page #{filename}"
 
-  File.open PAGES_DIRECTORY + '/' + filename, 'w' do |file|
+  File.open page_path(filename), 'w' do |file|
     file.write params['body']
   end
 
