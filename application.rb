@@ -36,3 +36,9 @@ post '/pages' do
 
   redirect '/'
 end
+
+get "/pages/:title" do |title|
+  @title = title
+  @body = File.read page_path(title)
+  erb :page
+end
