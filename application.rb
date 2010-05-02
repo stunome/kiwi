@@ -52,3 +52,10 @@ get "/pages/:title" do |title|
   @body = File.read page_path(title)
   erb :page
 end
+
+# --- Edit page ---------------------------------------------------------------
+get "/pages/edit/:title" do |title|
+  @title = title
+  @body  = File.read page_path(title)
+  erb :form
+end

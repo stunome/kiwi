@@ -1,9 +1,14 @@
 <form action="/pages" method="post">
   <p><label>Název stránky</label></p>
-  <p><input type="text" name="title"></p>
+  <% if @title %>
+    <p><%= @title %></p>
+    <p><input type="hidden" name="title" value="<%= @title %>"></p>
+  <% else %>
+    <p><input type="text" name="title" value="<%= @title %>"></p>
+  <% end %>
 
   <p><label>Text stránky:</label></p>
-  <p><textarea name="body"></textarea></p>
+  <p><textarea name="body"><%= @body %></textarea></p>
 
   <p><input type="submit" value="Uložit"></p>
 </form>
