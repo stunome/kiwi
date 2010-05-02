@@ -1,0 +1,54 @@
+html
+  { height: 100%; }
+
+body
+  { background: #5f3b02;
+    padding: 0;
+    height: 100%; }
+
+.container
+  { color: green !important;
+    background: white;
+    margin: 2em auto 2em auto;
+    padding: 2em 2em;
+    min-height: 40em;
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    border-radius: 5px; }
+
+.container *
+  { color: #3C270C; }
+
+.container #header h1
+  { color: #3C270C;
+    background: url('/images/kiwi-logo.png') 0 0 no-repeat;
+    padding: 30px 0 0.2em 125px;
+    margin: 0 !important;
+    height: 80px; }
+
+.container hr
+  { background-color: #CFC6B8; }
+
+.container ul
+  { padding-left: 1.4em; }
+
+a.button,
+input.button
+  { font-size: 11px;
+    color: #376100;
+    background: #B1E261;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    -webkit-border-radius: 10px;
+    -moz-border-radius:    10px;
+    border-radius: 10px;
+    position: relative; }
+
+a.button:hover,
+input.button:hover
+  { text-decoration: underline; }
+
+form p
+  { margin-bottom: 0; }
