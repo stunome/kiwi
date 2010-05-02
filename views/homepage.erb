@@ -1,9 +1,9 @@
 <ul>
 <% @pages.each do |page| %>
-  <li><a href="/pages/<%= page %>"><%= page %></a>
+  <li><a href="/pages/<%= escape(page) %>"><%= page %></a>
 <% end %>
 </ul>
 
 <hr>
 
-<a href="/new">Vytvořit novou stránku</a>
+<a href="/new" class="button">Vytvořit novou stránku</a>
