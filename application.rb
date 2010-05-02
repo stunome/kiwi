@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'fileutils'
+require 'bluecloth'
 
 # --- Storage ----------------------------------------------------------------
 PAGES_DIRECTORY = File.expand_path('../pages', __FILE__)
@@ -49,7 +50,8 @@ end
 # --- Show page ---------------------------------------------------------------
 get "/pages/:title" do |title|
   @title = title
-  @body = File.read page_path(title)
+  content = File.read page_path(title)
+  @body = BlueCloth.new( content ).to_html
   erb :page
 end
 
