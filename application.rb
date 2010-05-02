@@ -18,12 +18,14 @@ end
 
 # --- Homepage ----------------------------------------------------------------
 get '/' do
+  @pagetitle = 'Vítejte'
   @pages = Dir.entries(PAGES_DIRECTORY).reject { |file| file =~ /^\./ }
   erb :homepage
 end
 
 # --- New page ----------------------------------------------------------------
 get '/new' do
+  @pagetitle = 'Vytvořit novou stránku'
   erb :form
 end
 
@@ -49,7 +51,7 @@ end
 
 # --- Show page ---------------------------------------------------------------
 get "/pages/:title" do |title|
-  @title = title
+  @title = @pagetitle = title
   content = File.read page_path(title)
   @body = BlueCloth.new( content ).to_html
   erb :page
@@ -58,6 +60,7 @@ end
 # --- Edit page ---------------------------------------------------------------
 get "/pages/edit/:title" do |title|
   @title = title
+  @pagetitle = "Upravit stránku '#{@title}'"
   @body  = File.read page_path(title)
   erb :form
 end
