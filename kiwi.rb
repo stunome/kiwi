@@ -23,4 +23,12 @@ class Page
     PAGES_DIRECTORY + '/' + title
   end
 
+  private
+
+  # Sanitize folder name (strip '/' and '.' characters)
+  #
+  def sanitize_title
+    title = title.gsub( /(\\|\/)/, '' ).gsub( /\./, '_' )
+  end
+
 end

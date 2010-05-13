@@ -39,12 +39,9 @@ post '/pages' do
     return erb :form
   end
 
-  # Sanitize folder name (/, .)
-  folder_name = params['title'].gsub( /(\\|\/)/, '' ).gsub(/\./, '_')
+  puts "*** Creating page '#{params[:title]}'"
 
-  puts "*** Creating page #{folder_name}"
-
-  page = Page.new(:title => folder_name, :body => params[:body])
+  page = Page.new(:title => params[:title], :body => params[:body])
   page.save
 
   redirect '/'
