@@ -61,10 +61,14 @@ end
 
 # --- Edit page ---------------------------------------------------------------
 get "/pages/edit/:title" do |title|
-  @title = title
-  @pagetitle = "Upravit stránku '#{@title}'"
-  @body  = File.read page_path(title) + '/' + Dir.entries( page_path(title) ).last
-  erb :form
+  @page = Page.find(title)
+  if @page
+    @pagetitle = "Upravit stránku '#{@page.title}'"
+    @revisions = Dir.entries( page_path(title) ).reject { |file| file =~ /^\./ }
+    erb :form
+  else
+    not_found "Stránka nenalezena"
+  end
 end
 
 # --- Show page revision ------------------------------------------------------
