@@ -44,11 +44,8 @@ post '/pages' do
 
   puts "*** Creating page #{folder_name}"
 
-  FileUtils.mkdir_p page_path(folder_name)
-
-  File.open page_path(folder_name) + '/' + Time.now.to_i.to_s , 'w' do |file|
-    file.write params['body']
-  end
+  page = Page.new(:title => folder_name, :body => params[:body])
+  page.save
 
   redirect '/'
 end
