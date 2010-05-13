@@ -1,7 +1,26 @@
 <h2><%= @title %>
+  <% unless params[:timestamp] %>
     <a href="/pages/edit/<%= @title %>" class="button" style="margin-left: 1em; top: -2px;">Upravit</a>
+  <% end %>
 </h2>
 
 <hr>
 
 <%= @body %>
+
+<h2>Historie</h2>
+
+<ul>
+<% @revisions.each do |revision| %>
+<li>
+  <% if revision == params[:timestamp] %>
+    <strong>
+    <%= Time.at(revision.to_i).strftime('%d/%m/%Y %H:%M') %>
+    </strong>
+  <% else %>
+    <a href="/pages/<%= @title %>/revisions/<%= revision %>">
+      <%= Time.at(revision.to_i).strftime('%d/%m/%Y %H:%M') %>
+    </a>
+  <% end %>
+<% end %>
+</ul>
