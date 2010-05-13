@@ -1,3 +1,9 @@
+class Time
+  def humanize
+   self.strftime('%d/%m/%Y %H:%M') 
+  end
+end
+
 class Page
 
   attr_accessor :title, :body, :revisions

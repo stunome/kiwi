@@ -64,7 +64,7 @@ end
 get "/pages/:title/revisions/:timestamp" do |title, timestamp|
   @page = Page.find(title, timestamp)
   if @page
-    @pagetitle = "#{@page.title} &mdash; revize z #{Time.at(timestamp.to_i).strftime('%d/%m/%Y %H:%M')}"
+    @pagetitle = "#{@page.title} &mdash; revize z #{Time.at(timestamp.to_i).humanize}"
     erb :page
   else
     not_found "Stránka nenalezena"
