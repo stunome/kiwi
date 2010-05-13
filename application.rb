@@ -49,11 +49,14 @@ end
 
 # --- Show page ---------------------------------------------------------------
 get "/pages/:title" do |title|
-  @title = @pagetitle = title
-  content = File.read page_path(title) + '/' + Dir.entries( page_path(title) ).last
-  @body = BlueCloth.new( content ).to_html
-  @revisions = Dir.entries( page_path(title) ).reject { |file| file =~ /^\./ }
-  erb :page
+  @page = Page.find(title)
+  if @page
+    @pagetitle = @page.title
+    @revisions = Dir.entries( page_path(title) ).reject { |file| file =~ /^\./ }
+    erb :page
+  else
+    not_found "Stránka nenalezena"
+  end
 end
 
 # --- Edit page ---------------------------------------------------------------

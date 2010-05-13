@@ -1,12 +1,12 @@
-<h2><%= @title %>
+<h2><%= @page.title %>
   <% unless params[:timestamp] %>
-    <a href="/pages/edit/<%= @title %>" class="button" style="margin-left: 1em; top: -2px;">Upravit</a>
+    <a href="/pages/edit/<%= @page.title %>" class="button" style="margin-left: 1em; top: -2px;">Upravit</a>
   <% end %>
 </h2>
 
 <hr>
 
-<%= @body %>
+<%= @page.body_html %>
 
 <h2>Historie</h2>
 

@@ -11,6 +11,16 @@ class Page
     Dir.entries(PAGES_DIRECTORY).reject { |file| file =~ /^\./ }
   end
 
+  def self.find(title)
+    page = Page.new :title => title
+    if File.exist? page.path
+      page.body = File.read page.path + '/' + Dir.entries( page.path ).last 
+      return page
+    else
+      return nil
+    end
+  end
+
   def save
     FileUtils.mkdir_p path
 
@@ -25,6 +35,10 @@ class Page
 
   def valid?
     not title.nil? and not title.strip == ''
+  end
+
+  def body_html
+    BlueCloth.new(body).to_html
   end
 
   private
