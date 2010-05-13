@@ -34,17 +34,17 @@ end
 # --- Create page -------------------------------------------------------------
 post '/pages' do
 
-  # Empty title?
-  if params['title'].nil? || params['title'] == ''
-    return erb :form
-  end
-
   puts "*** Creating page '#{params[:title]}'"
 
   page = Page.new(:title => params[:title], :body => params[:body])
-  page.save
 
-  redirect '/'
+  if page.valid?
+    page.save
+    redirect '/'
+  else
+    erb :form
+  end
+
 end
 
 # --- Show page ---------------------------------------------------------------

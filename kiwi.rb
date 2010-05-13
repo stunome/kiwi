@@ -23,6 +23,10 @@ class Page
     PAGES_DIRECTORY + '/' + title
   end
 
+  def valid?
+    not title.nil? and not title.strip == ''
+  end
+
   private
 
   # Sanitize folder name (strip '/' and '.' characters)
