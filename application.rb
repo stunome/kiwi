@@ -37,12 +37,14 @@ post '/pages' do
     return erb :form
   end
 
-  # Sanitize filename (/, .)
-  filename = params['title'].gsub( /(\\|\/)/, '' ).gsub(/\./, '_')
+  # Sanitize folder name (/, .)
+  folder_name = params['title'].gsub( /(\\|\/)/, '' ).gsub(/\./, '_')
 
-  puts "*** Creating page #{filename}"
+  puts "*** Creating page #{folder_name}"
 
-  File.open page_path(filename), 'w' do |file|
+  FileUtils.mkdir_p page_path(folder_name)
+
+  File.open page_path(folder_name) + '/' + Time.now.to_i.to_s , 'w' do |file|
     file.write params['body']
   end
 
@@ -52,7 +54,7 @@ end
 # --- Show page ---------------------------------------------------------------
 get "/pages/:title" do |title|
   @title = @pagetitle = title
-  content = File.read page_path(title)
+  content = File.read page_path(title) + '/' + Dir.entries( page_path(title) ).last
   @body = BlueCloth.new( content ).to_html
   erb :page
 end
@@ -61,6 +63,6 @@ end
 get "/pages/edit/:title" do |title|
   @title = title
   @pagetitle = "Upravit stránku '#{@title}'"
-  @body  = File.read page_path(title)
+  @body  = File.read page_path(title) + '/' + Dir.entries( page_path(title) ).last
   erb :form
 end
