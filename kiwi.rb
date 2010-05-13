@@ -1,6 +1,6 @@
 class Page
 
-  attr_accessor :title, :body
+  attr_accessor :title, :body, :revisions
 
   def initialize(attributes={})
     @title = attributes[:title]
@@ -11,10 +11,11 @@ class Page
     Dir.entries(PAGES_DIRECTORY).reject { |file| file =~ /^\./ }
   end
 
-  def self.find(title)
+  def self.find(title, revision=nil)
     page = Page.new :title => title
     if File.exist? page.path
-      page.body = File.read page.path + '/' + Dir.entries( page.path ).last 
+      revision  = page.revisions.last unless revision
+      page.body = File.read page.path + '/' + revision
       return page
     else
       return nil
@@ -39,6 +40,10 @@ class Page
 
   def body_html
     BlueCloth.new(body).to_html
+  end
+
+  def revisions
+    Dir.entries( path ).reject { |file| file =~ /^\./ }
   end
 
   private

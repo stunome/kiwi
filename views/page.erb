@@ -11,14 +11,14 @@
 <h2>Historie</h2>
 
 <ul>
-<% @revisions.each do |revision| %>
+<% @page.revisions.each do |revision| %>
 <li>
   <% if revision == params[:timestamp] %>
     <strong>
     <%= Time.at(revision.to_i).strftime('%d/%m/%Y %H:%M') %>
     </strong>
   <% else %>
-    <a href="/pages/<%= @title %>/revisions/<%= revision %>">
+    <a href="/pages/<%= @page.title %>/revisions/<%= revision %>">
       <%= Time.at(revision.to_i).strftime('%d/%m/%Y %H:%M') %>
     </a>
   <% end %>

@@ -9,15 +9,6 @@ require 'kiwi'
 PAGES_DIRECTORY = File.expand_path('../pages', __FILE__)
 FileUtils.mkdir_p PAGES_DIRECTORY
 
-# --- Helpers ----------------------------------------------------------------
-helpers do
-
-  def page_path(title)
-    PAGES_DIRECTORY + '/' + title
-  end
-
-end
-
 # --- Homepage ----------------------------------------------------------------
 get '/' do
   @pagetitle = 'Vítejte'
@@ -52,7 +43,6 @@ get "/pages/:title" do |title|
   @page = Page.find(title)
   if @page
     @pagetitle = @page.title
-    @revisions = Dir.entries( page_path(title) ).reject { |file| file =~ /^\./ }
     erb :page
   else
     not_found "Stránka nenalezena"
@@ -64,7 +54,6 @@ get "/pages/edit/:title" do |title|
   @page = Page.find(title)
   if @page
     @pagetitle = "Upravit stránku '#{@page.title}'"
-    @revisions = Dir.entries( page_path(title) ).reject { |file| file =~ /^\./ }
     erb :form
   else
     not_found "Stránka nenalezena"
@@ -73,10 +62,11 @@ end
 
 # --- Show page revision ------------------------------------------------------
 get "/pages/:title/revisions/:timestamp" do |title, timestamp|
-  @title = title
-  @pagetitle = "#{title} &mdash; revize z #{Time.at(timestamp.to_i).strftime('%d/%m/%Y %H:%M')}"
-  content = File.read page_path(title) + '/' + timestamp
-  @body = BlueCloth.new( content ).to_html
-  @revisions = Dir.entries( page_path(title) ).reject { |file| file =~ /^\./ }
-  erb :page
+  @page = Page.find(title, timestamp)
+  if @page
+    @pagetitle = "#{@page.title} &mdash; revize z #{Time.at(timestamp.to_i).strftime('%d/%m/%Y %H:%M')}"
+    erb :page
+  else
+    not_found "Stránka nenalezena"
+  end
 end
