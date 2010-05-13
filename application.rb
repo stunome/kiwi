@@ -3,6 +3,8 @@ require 'sinatra'
 require 'fileutils'
 require 'bluecloth'
 
+require 'kiwi'
+
 # --- Storage ----------------------------------------------------------------
 PAGES_DIRECTORY = File.expand_path('../pages', __FILE__)
 FileUtils.mkdir_p PAGES_DIRECTORY
@@ -19,7 +21,7 @@ end
 # --- Homepage ----------------------------------------------------------------
 get '/' do
   @pagetitle = 'Vítejte'
-  @pages = Dir.entries(PAGES_DIRECTORY).reject { |file| file =~ /^\./ }
+  @pages = Page.all
   erb :homepage
 end
 
